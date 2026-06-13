@@ -1,0 +1,5 @@
+# phpstan.neon
+parameters:
+    level: 8 # Level 8 or 9 is the professional standard for "strict"
+    paths:
+        - src

@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Database;
+
+use PDO;
+
+class Database implements IDatabase
+{
+    private PDO $pdo;
+
+    public function __construct(PDO $pdo)
+    {
+        $this->pdo = $pdo;
+    }
+
+    public function execute(string $sql, array $params = []): bool
+    {
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute($params);
+    }
+
+    public function query(string $sql, array $params = []): array
+    {
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getLastInsertId(): string|bool
+    {
+        return $this->pdo->lastInsertId();
+    }
+}
