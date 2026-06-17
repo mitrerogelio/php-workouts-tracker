@@ -13,12 +13,22 @@ class Database implements IDatabase
         $this->pdo = $pdo;
     }
 
+    /**
+     * @param string $sql
+     * @param array<string, mixed> $params
+     * @return bool
+     */
     public function execute(string $sql, array $params = []): bool
     {
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute($params);
     }
 
+    /**
+     * @param string $sql
+     * @param array<string, mixed> $params
+     * @return array<int, array<string, mixed>>
+     */
     public function query(string $sql, array $params = []): array
     {
         $stmt = $this->pdo->prepare($sql);
@@ -26,6 +36,9 @@ class Database implements IDatabase
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * @return string|bool
+     */
     public function getLastInsertId(): string|bool
     {
         return $this->pdo->lastInsertId();
