@@ -2,12 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Models\Workout;
+use App\Models\WorkoutSession;
 
 // TODO: Define interface methods:
-// - getById(int $id): ?Workout
+// - getById(int $id): ?WorkoutSession
 // - getByUserId(int $userId): array
-// - save(Workout $workout): bool
+// - save(WorkoutSession $workout): bool
 // - delete(int $id): bool
 
 interface IWorkoutRepository {}
