@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Database;
 
 use PDO;
@@ -28,11 +30,13 @@ class Database implements IDatabase
      * @param string $sql
      * @param array<string, mixed> $params
      * @return array<int, array<string, mixed>>
+     * @phpstan-return array<int, array<string, mixed>>
      */
     public function query(string $sql, array $params = []): array
     {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
+        /** @var array<int, array<string, mixed>> */
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

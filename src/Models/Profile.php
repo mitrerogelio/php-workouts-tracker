@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use DateTimeImmutable;
+use App\Services\DataCaster;
 
 class Profile
 {
     public function __construct(
-        protected int             $id {
+        public int                $id {
             get => $this->id;
         },
         public string             $firstName {
@@ -41,13 +44,13 @@ class Profile
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int)$data['id'],
-            firstName: (string)$data['fname'],
-            lastName: (string)$data['lname'],
-            username: (string)$data['usr_name'],
-            gender: isset($data['gender']) ? Gender::from((string)$data['gender']) : null,
-            createdAt: new DateTimeImmutable((string)$data['created_at']),
-            updatedAt: isset($data['updated_at']) ? new DateTimeImmutable((string)$data['updated_at']) : null,
+            id: DataCaster::toInt($data['id']),
+            firstName: DataCaster::toString($data['fname']),
+            lastName: DataCaster::toString($data['lname']),
+            username: DataCaster::toString($data['usr_name']),
+            gender: isset($data['gender']) ? Gender::from(DataCaster::toString($data['gender'])) : null,
+            createdAt: new DateTimeImmutable(DataCaster::toString($data['created_at'])),
+            updatedAt: isset($data['updated_at']) ? new DateTimeImmutable(DataCaster::toString($data['updated_at'])) : null,
         );
     }
 }

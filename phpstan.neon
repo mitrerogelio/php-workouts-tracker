@@ -1,5 +1,9 @@
 # phpstan.neon
 parameters:
-    level: 8 # Level 8 or 9 is the professional standard for "strict"
+    level: max # Level 8 or 9 is the professional standard for "strict"
     paths:
         - src
+    excludePaths:
+        # View templates are logic-free presentation; analysing them at max
+        # level fights the nature of inline-PHP templating.
+        - src/Views/*

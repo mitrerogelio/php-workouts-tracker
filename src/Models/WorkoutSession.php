@@ -1,18 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use DateTimeImmutable;
+use App\Services\DataCaster;
 
 class WorkoutSession
 {
-
-    /**
-     * @param int $id
-     * @param int $userId
-     * @param DateTimeImmutable $createdAt
-     * @param ?string $notes
-     */
 
     public function __construct(
         public int                $id {
@@ -20,17 +16,14 @@ class WorkoutSession
         },
         public int                $userId {
             get => $this->userId;
-            set => throw new \LogicException('id is readonly');
         },
-        public DateTimeImmutable $createdAt {
+        public DateTimeImmutable  $createdAt {
             get => $this->createdAt;
         },
         public ?string            $notes = null {
             get => $this->notes;
         },
-    )
-    {
-    }
+    ) {}
 
     /**
      * Map database row to Domain Model
@@ -41,10 +34,10 @@ class WorkoutSession
     public static function fromArray(array $data): self
     {
         return new self(
-            id: (int)$data['id'],
-            userId: (int)$data['usr_id'],
-            createdAt: new DateTimeImmutable((string)$data['created_at']),
-            notes: isset($data['notes']) ? (string)$data['notes'] : null
+            id: DataCaster::toInt($data['id']),
+            userId: DataCaster::toInt($data['usr_id']),
+            createdAt: new DateTimeImmutable(DataCaster::toString($data['created_at'])),
+            notes: isset($data['notes']) ? DataCaster::toString($data['notes']) : null,
         );
     }
 }
