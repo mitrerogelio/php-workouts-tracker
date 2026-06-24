@@ -44,6 +44,14 @@ class WorkoutRepository implements IWorkoutRepository
         return is_string($id) ? (int) $id : 0;
     }
 
+    public function update(int $id, ?string $notes): bool
+    {
+        return $this->db->execute(
+            'UPDATE workout_sessions SET notes = :notes WHERE id = :id',
+            ['id' => $id, 'notes' => $notes]
+        );
+    }
+
     public function delete(int $id): bool
     {
         return $this->db->execute('DELETE FROM workout_sessions WHERE id = :id', ['id' => $id]);

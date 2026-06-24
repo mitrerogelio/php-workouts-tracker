@@ -54,7 +54,11 @@ $router->add('POST', '/login', static fn () => $authController->login());
 $router->add('GET', '/logout', static fn () => $authController->logout());
 $router->add('GET', '/dashboard', static fn () => $dashboardController->index());
 $router->add('POST', '/workouts/create', static fn () => $workoutController->create());
+$router->add('POST', '/workouts/update', static fn () => $workoutController->update());
+$router->add('POST', '/workouts/delete', static fn () => $workoutController->delete());
 $router->add('POST', '/sets/create', static fn () => $workoutController->addSet());
+$router->add('POST', '/sets/update', static fn () => $workoutController->updateSet());
+$router->add('POST', '/sets/delete', static fn () => $workoutController->deleteSet());
 
 // --- Dispatch -----------------------------------------------------------------
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';

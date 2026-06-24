@@ -13,6 +13,8 @@ interface IExerciseSetRepository
      */
     public function findBySessionId(int $sessionId): array;
 
+    public function findById(int $id): ?ExerciseSet;
+
     /**
      * Insert a new set for a session and return its generated id.
      */
@@ -24,4 +26,18 @@ interface IExerciseSetRepository
         ?int $duration,
         int $setNumber
     ): int;
+
+    /**
+     * Update an existing set (the parent session is not changed).
+     */
+    public function update(
+        int $id,
+        int $exerciseId,
+        ?int $reps,
+        ?float $weight,
+        ?int $duration,
+        int $setNumber
+    ): bool;
+
+    public function delete(int $id): bool;
 }

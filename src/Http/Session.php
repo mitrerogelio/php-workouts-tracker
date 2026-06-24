@@ -23,6 +23,10 @@ class Session
 
     public static function login(int $userId, string $username): void
     {
+        // Rotate the session id on privilege change to prevent session fixation.
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_regenerate_id(true);
+        }
         $_SESSION['user_id'] = $userId;
         $_SESSION['username'] = $username;
     }
@@ -30,5 +34,8 @@ class Session
     public static function clear(): void
     {
         $_SESSION = [];
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_regenerate_id(true);
+        }
     }
 }

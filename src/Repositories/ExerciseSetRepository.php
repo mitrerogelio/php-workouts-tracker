@@ -27,6 +27,12 @@ class ExerciseSetRepository implements IExerciseSetRepository
         );
     }
 
+    public function findById(int $id): ?ExerciseSet
+    {
+        $rows = $this->db->query('SELECT * FROM exercise_sets WHERE id = :id', ['id' => $id]);
+        return $rows === [] ? null : ExerciseSet::fromArray($rows[0]);
+    }
+
     public function create(
         int $sessionId,
         int $exerciseId,
@@ -50,5 +56,37 @@ class ExerciseSetRepository implements IExerciseSetRepository
 
         $id = $this->db->getLastInsertId();
         return is_string($id) ? (int) $id : 0;
+    }
+
+    public function update(
+        int $id,
+        int $exerciseId,
+        ?int $reps,
+        ?float $weight,
+        ?int $duration,
+        int $setNumber
+    ): bool {
+        return $this->db->execute(
+            'UPDATE exercise_sets
+                SET exercise_id = :exerciseId,
+                    reps = :reps,
+                    weight = :weight,
+                    duration = :duration,
+                    set_number = :setNumber
+              WHERE id = :id',
+            [
+                'id' => $id,
+                'exerciseId' => $exerciseId,
+                'reps' => $reps,
+                'weight' => $weight,
+                'duration' => $duration,
+                'setNumber' => $setNumber,
+            ]
+        );
+    }
+
+    public function delete(int $id): bool
+    {
+        return $this->db->execute('DELETE FROM exercise_sets WHERE id = :id', ['id' => $id]);
     }
 }

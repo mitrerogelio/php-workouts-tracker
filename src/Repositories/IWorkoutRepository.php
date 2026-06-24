@@ -20,5 +20,10 @@ interface IWorkoutRepository
      */
     public function create(int $userId, ?string $notes): int;
 
+    /**
+     * Update an existing session's name/notes.
+     */
+    public function update(int $id, ?string $notes): bool;
+
     public function delete(int $id): bool;
 }
